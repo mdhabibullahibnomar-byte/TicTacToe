@@ -5,6 +5,7 @@ let win = document.querySelector("#win");
 let msg = document.querySelector(".msg")
 
 let turnO = true;
+let tab =0;
 
 const winPatterns =[
     [0,1,2],
@@ -18,6 +19,8 @@ const winPatterns =[
 ];
 boxes.forEach((box) => {
     box.addEventListener("click", () => {
+        tab++;
+        console.log("tab",tab);
         if(turnO){
             box.innerText =  "O";
             turnO = false;
@@ -27,12 +30,18 @@ boxes.forEach((box) => {
         turnO = true;
         }
         box.disabled = true;
+        if(tab===8){
+            boxes.forEach(box => box.disabled = true);
+             msg.classList.remove("hide");
+               win.innerText = "Draw";
+        }
         checkWinner();
     })
 }
 )
 const resetGame =() =>{
     turnO= true;
+    tab=0;
     enableBoxes();
     msg.classList.add("hide");
 }
@@ -47,7 +56,6 @@ const showWinner = (vectory) =>{
       msg.classList.remove("hide"); 
       boxes.forEach(box =>{
         box.disabled = true;
-
       })
 }
 const checkWinner = () => {
